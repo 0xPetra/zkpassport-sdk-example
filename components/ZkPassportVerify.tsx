@@ -270,15 +270,16 @@ export default function ZkPassportVerify({ marketIds = [] }: ZkPassportVerifyPro
     setError(null)
 
     try {
-      const response = await fetch("/api/faucet", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          proofs: proofsRef.current,
-          queryResult: queryResultRef.current,
-          walletInput: input,
-        }),
-      })
+    const response = await fetch("/api/faucet", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        proofs: proofsRef.current,
+        queryResult: queryResultRef.current,
+        walletInput: input,
+        domain: window.location.hostname,
+      }),
+    })
 
       const data = await response.json()
 

@@ -19,16 +19,7 @@ const MATE_TOKEN_ADDRESS = process.env.MATE_TOKEN_ADDRESS || "0xc139c86de76df41c
 const FAUCET_PRIVATE_KEY = process.env.FAUCET_PRIVATE_KEY
 const BASE_RPC_URL = process.env.BASE_RPC_URL || "https://mainnet.base.org"
 
-function getZkPassportDomain(request: Request): string {
-  // Use the request host to match the client-side domain detection
-  const host = request.headers.get("host") || request.headers.get("x-forwarded-host")
-  if (host) {
-    // Strip port if present
-    return host.split(":")[0]
-  }
-  // Fallback to environment variable or default
-  return process.env.ZKPASSPORT_DOMAIN || "localhost"
-}
+
 
 function getRatelimiter(): Ratelimit | null {
   const url = process.env.UPSTASH_REDIS_REST_URL
@@ -149,10 +140,10 @@ export async function POST(request: Request): Promise<Response> {
     }
 
     const body = await request.json()
-    const { proofs, queryResult, walletInput } = body
+    const { proofs, queryResult, walletInput, domain } = body
 
-    if (!proofs || !queryResult || !walletInput) {
-      return errorResponse("Missing required fields: proofs, queryResult, walletInput", "INVALID_REQUEST", 400)
+    if (!proofs || !queryResult || !walletInput || !domain) {
+      return errorResponse("Missing required fields: proofs, queryResult, walletInput, domain", "INVALID_REQUEST", 400)
     }
 
     const walletAddress = await resolveWalletAddress(walletInput)
@@ -168,7 +159,6 @@ export async function POST(request: Request): Promise<Response> {
     let uniqueIdentifier: string
     try {
       const devMode = process.env.NODE_ENV === "development"
-      const domain = getZkPassportDomain(request)
       console.log("[Faucet] devMode:", devMode, "domain:", domain)
 
       const zkPassport = new ZKPassport(domain)
