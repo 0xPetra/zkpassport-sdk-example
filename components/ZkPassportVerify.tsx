@@ -260,7 +260,7 @@ export default function ZkPassportVerify({ marketIds = [], zkPassportDomain }: Z
       setError(err instanceof Error ? err.message : "Failed to initialize verification.")
       setState("error")
     }
-  }, [clearTimers])
+  }, [clearTimers, zkPassportDomain])
 
   const claimTokens = useCallback(async () => {
     const input = walletInput.trim()
