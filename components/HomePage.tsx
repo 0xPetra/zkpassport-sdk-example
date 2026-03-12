@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef, useCallback, type RefObject } from "react"
-import { Shader, ChromaFlow, Swirl } from "shaders/react"
+
 import ZkPassportVerify from "./ZkPassportVerify"
 
 // --- Helpers ---
@@ -570,27 +570,17 @@ export default function HomePage() {
         className={`fixed inset-0 z-0 transition-opacity duration-700 ${isLoaded ? "opacity-100" : "opacity-0"}`}
         style={{ contain: "strict" }}
       >
-        <Shader className="h-full w-full">
-          <Swirl
-            colorA="#1275d8"
-            colorB="#e19136"
-            speed={0.8}
-            detail={0.8}
-            blend={50}
-          />
-          <ChromaFlow
-            baseColor="#0066ff"
-            upColor="#0066ff"
-            downColor="#d1d1d1"
-            leftColor="#e19136"
-            rightColor="#e19136"
-            intensity={0.9}
-            radius={1.8}
-            momentum={25}
-            maskType="alpha"
-            opacity={0.97}
-          />
-        </Shader>
+        <div 
+          className="h-full w-full"
+          style={{
+            background: `
+              radial-gradient(ellipse 80% 50% at 50% -20%, rgba(18, 117, 216, 0.3), transparent),
+              radial-gradient(ellipse 60% 40% at 80% 50%, rgba(225, 145, 54, 0.2), transparent),
+              radial-gradient(ellipse 50% 50% at 20% 80%, rgba(0, 102, 255, 0.15), transparent),
+              linear-gradient(180deg, #0a0a0a 0%, #0f0f0f 50%, #0a0a0a 100%)
+            `
+          }}
+        />
         <div className="absolute inset-0 bg-black/20" />
       </div>
 
