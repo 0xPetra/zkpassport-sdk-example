@@ -1,3 +1,5 @@
+export const runtime = 'nodejs';
+
 import { createWalletClient, createPublicClient, http, parseUnits } from "viem"
 import { base, mainnet } from "viem/chains"
 import { privateKeyToAccount } from "viem/accounts"
