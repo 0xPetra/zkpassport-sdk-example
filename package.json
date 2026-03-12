@@ -18,7 +18,7 @@
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "react-qr-code": "^2.0.15",
-    "shaders": "^0.2.0",
+    "shaders": "^2.3.53",
     "viem": "^2.27.0"
   },
   "devDependencies": {
