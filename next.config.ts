@@ -7,6 +7,10 @@ const nextConfig: NextConfig = {
       "./node_modules/@aztec/bb.js/dest/node/**/*",
       "./node_modules/@aztec/bb.js/dest/node-cjs/**/*",
     ],
+    "/api/faucet": [
+      "./node_modules/@aztec/bb.js/dest/node/**/*",
+      "./node_modules/@aztec/bb.js/dest/node-cjs/**/*",
+    ],
   },
   serverExternalPackages: ["@aztec/bb.js"],
   webpack: (config, { isServer }) => {
