@@ -174,7 +174,7 @@ export async function POST(request: Request): Promise<Response> {
       }
 
       uniqueIdentifier = result.uniqueIdentifier
-      console.log(`[Faucet] Verified — uniqueIdentifier: ${uniqueIdentifier.slice(0, 16)}… wallet: ${walletAddress} devMode: ${ZKPASSPORT_DEV_MODE}`)
+      console.log(`[Faucet] Verified — uniqueIdentifier: ${uniqueIdentifier.slice(0, 16)}… wallet: ${walletAddress} devMode: ${devMode}`)
     } catch (err) {
       console.error("[Faucet] zkPassport verify error:", err)
       return errorResponse("Proof verification error", "INVALID_PROOF", 400)
