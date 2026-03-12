@@ -8,7 +8,7 @@ const nextConfig: NextConfig = {
       "./node_modules/@aztec/bb.js/dest/node-cjs/**/*",
     ],
   },
-  serverComponentsExternalPackages: ["@aztec/bb.js"],
+  serverExternalPackages: ["@aztec/bb.js"],
   webpack: (config, { isServer }) => {
     if (isServer) {
       config.externals.push({
