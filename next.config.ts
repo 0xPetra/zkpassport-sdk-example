@@ -20,10 +20,18 @@ const nextConfig: NextConfig = {
 
     return config;
   },
-  // 3. Tell Vercel to include the WASM file in the serverless bundle
+  // 3. Tell Vercel to include the WASM files in the serverless bundle
   outputFileTracingIncludes: {
-    "/api/register": ["./node_modules/@aztec/bb.js/**/*.wasm"],
-    "/api/faucet": ["./node_modules/@aztec/bb.js/**/*.wasm"],
+    "/api/register": [
+      "./node_modules/@aztec/bb.js/**/*.wasm",
+      "./node_modules/@aztec/bb.js/**/*.wasm.gz",
+      "./node_modules/@aztec/bb.js/dest/**/*",
+    ],
+    "/api/faucet": [
+      "./node_modules/@aztec/bb.js/**/*.wasm",
+      "./node_modules/@aztec/bb.js/**/*.wasm.gz",
+      "./node_modules/@aztec/bb.js/dest/**/*",
+    ],
   },
   serverExternalPackages: ["@aztec/bb.js"],
 };
