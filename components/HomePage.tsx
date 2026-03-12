@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef, useCallback, type RefObject } from "react"
-import { Shader, ChromaFlow, Swirl } from "shaders/react"
+import { Swirl } from "@paper-design/shaders-react"
 import ZkPassportVerify from "./ZkPassportVerify"
 
 // --- Helpers ---
@@ -570,27 +570,19 @@ export default function HomePage() {
         className={`fixed inset-0 z-0 transition-opacity duration-700 ${isLoaded ? "opacity-100" : "opacity-0"}`}
         style={{ contain: "strict" }}
       >
-        <Shader className="h-full w-full">
-          <Swirl
-            colorA="#1275d8"
-            colorB="#e19136"
-            speed={0.8}
-            detail={0.8}
-            blend={50}
-          />
-          <ChromaFlow
-            baseColor="#0066ff"
-            upColor="#0066ff"
-            downColor="#d1d1d1"
-            leftColor="#e19136"
-            rightColor="#e19136"
-            intensity={0.9}
-            radius={1.8}
-            momentum={25}
-            maskType="alpha"
-            opacity={0.97}
-          />
-        </Shader>
+        <Swirl
+          style={{ width: "100%", height: "100%" }}
+          colors={["#1275d8", "#e19136", "#0066ff", "#d1d1d1"]}
+          colorBack="#0a0a0a"
+          bandCount={4}
+          twist={0.3}
+          center={0.2}
+          proportion={0.5}
+          softness={0.4}
+          noise={0.2}
+          noiseFrequency={0.4}
+          speed={0.3}
+        />
         <div className="absolute inset-0 bg-black/20" />
       </div>
 
