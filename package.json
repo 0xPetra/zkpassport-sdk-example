@@ -10,11 +10,15 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@upstash/ratelimit": "^2.0.5",
+    "@upstash/redis": "^1.34.3",
     "@zkpassport/sdk": "^0.12.5",
     "next": "15.1.0",
+    "qrcode.react": "^4.2.0",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "react-qr-code": "^2.0.15",
+    "shaders": "^0.2.0",
     "viem": "^2.27.0"
   },
   "devDependencies": {
