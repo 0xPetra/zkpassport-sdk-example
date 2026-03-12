@@ -18,26 +18,6 @@ interface FaucetError {
 const MATE_TOKEN_ADDRESS = process.env.MATE_TOKEN_ADDRESS || "0xc139c86de76df41c041a30853c3958427fa7cebd"
 const FAUCET_PRIVATE_KEY = process.env.FAUCET_PRIVATE_KEY
 const BASE_RPC_URL = process.env.BASE_RPC_URL || "https://mainnet.base.org"
-const ZKPASSPORT_DEV_MODE = process.env.ZKPASSPORT_DEV_MODE === "true"
-
-function normalizeZkPassportDomain(rawValue: string): string {
-  const trimmed = rawValue.trim()
-  if (!trimmed) return "matetoken.xyz"
-
-  try {
-    return new URL(trimmed).hostname
-  } catch {
-    return trimmed.replace(/^https?:\/\//, "").replace(/\/+$/, "")
-  }
-}
-
-function getDefaultZkPassportDomain(): string {
-  return process.env.VERCEL_ENV === "production" ? "matetoken.xyz" : "staging.matetoken.xyz"
-}
-
-const ZKPASSPORT_DOMAIN = normalizeZkPassportDomain(
-  process.env.ZKPASSPORT_DOMAIN || getDefaultZkPassportDomain()
-)
 
 function getRatelimiter(): Ratelimit | null {
   const url = process.env.UPSTASH_REDIS_REST_URL
@@ -176,11 +156,11 @@ export async function POST(request: Request): Promise<Response> {
 
     let uniqueIdentifier: string
     try {
-      console.log("[Faucet] ZKPASSPORT_DOMAIN:", ZKPASSPORT_DOMAIN)
-      console.log("[Faucet] ZKPASSPORT_DEV_MODE:", ZKPASSPORT_DEV_MODE)
+      const devMode = process.env.NODE_ENV === "development"
+      console.log("[Faucet] devMode:", devMode)
 
-      const zkPassport = new ZKPassport(ZKPASSPORT_DOMAIN)
-      const result = await zkPassport.verify({ proofs, queryResult, devMode: ZKPASSPORT_DEV_MODE })
+      const zkPassport = new ZKPassport()
+      const result = await zkPassport.verify({ proofs, queryResult, devMode })
 
       console.log("[Faucet] Verification result:", result)
 

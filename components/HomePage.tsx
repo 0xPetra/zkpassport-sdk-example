@@ -274,7 +274,7 @@ function FaucetSection() {
                 <p className="font-mono text-[10px] tracking-widest text-[#3d3228]/35 uppercase">Powered by zkPassport</p>
               </div>
             </div>
-            <ZkPassportVerify marketIds={[]} zkPassportDomain={process.env.NEXT_PUBLIC_ZKPASSPORT_DOMAIN} />
+            <ZkPassportVerify marketIds={[]} />
           </div>
         </div>
       </div>

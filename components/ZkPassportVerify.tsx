@@ -90,7 +90,6 @@ function MarketsSection({ marketIds }: { marketIds: number[] }) {
 
 interface ZkPassportVerifyProps {
   marketIds?: number[]
-  zkPassportDomain?: string
 }
 
 function isValidEthAddress(input: string): boolean {
@@ -102,7 +101,7 @@ function looksLikeEns(input: string): boolean {
   return trimmed.includes(".") && !isValidEthAddress(trimmed) && trimmed.length > 3
 }
 
-export default function ZkPassportVerify({ marketIds = [], zkPassportDomain }: ZkPassportVerifyProps) {
+export default function ZkPassportVerify({ marketIds = [] }: ZkPassportVerifyProps) {
   const [state, setState] = useState<VerificationState>("idle")
   const [scanStatus, setScanStatus] = useState<ScanStatus>("awaiting_scan")
   const [error, setError] = useState<string | null>(null)
@@ -188,10 +187,10 @@ export default function ZkPassportVerify({ marketIds = [], zkPassportDomain }: Z
 
     try {
       if (!zkpassportRef.current) {
-        zkpassportRef.current = zkPassportDomain ? new ZKPassport(zkPassportDomain) : new ZKPassport()
+        zkpassportRef.current = new ZKPassport()
       }
 
-      const devMode = process.env.NEXT_PUBLIC_ZKPASSPORT_DEV_MODE === "true"
+      const devMode = process.env.NODE_ENV === "development"
       const query = await zkpassportRef.current.request({
         name: "MATE Faucet",
         logo: "https://matetoken.xyz/favicon.ico",
@@ -260,7 +259,7 @@ export default function ZkPassportVerify({ marketIds = [], zkPassportDomain }: Z
       setError(err instanceof Error ? err.message : "Failed to initialize verification.")
       setState("error")
     }
-  }, [clearTimers, zkPassportDomain])
+  }, [clearTimers])
 
   const claimTokens = useCallback(async () => {
     const input = walletInput.trim()
