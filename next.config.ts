@@ -1,39 +1,33 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  webpack: (config) => {
-    // 1. Enable WASM and Top-Level Await
+  /* config options here */
+  outputFileTracingIncludes: {
+    "/api/register": [
+      "./node_modules/@aztec/bb.js/dest/node/**/*",
+      "./node_modules/@aztec/bb.js/dest/node-cjs/**/*",
+    ],
+    "/api/faucet": [
+      "./node_modules/@aztec/bb.js/dest/node/**/*",
+      "./node_modules/@aztec/bb.js/dest/node-cjs/**/*",
+    ],
+  },
+  serverExternalPackages: ["@aztec/bb.js"],
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      config.externals.push({
+        "@aztec/bb.js": "@aztec/bb.js",
+      });
+    }
+
+    // Handle WASM files
     config.experiments = {
       ...config.experiments,
       asyncWebAssembly: true,
-      topLevelAwait: true,
-      layers: true,
-    };
-
-    // 2. Fix for Node.js built-ins that Aztec might try to use
-    config.resolve.fallback = {
-      ...config.resolve.fallback,
-      fs: false,
-      path: false,
-      crypto: false,
     };
 
     return config;
   },
-  // 3. Tell Vercel to include the WASM files in the serverless bundle
-  outputFileTracingIncludes: {
-    "/api/register": [
-      "./node_modules/@aztec/bb.js/**/*.wasm",
-      "./node_modules/@aztec/bb.js/**/*.wasm.gz",
-      "./node_modules/@aztec/bb.js/dest/**/*",
-    ],
-    "/api/faucet": [
-      "./node_modules/@aztec/bb.js/**/*.wasm",
-      "./node_modules/@aztec/bb.js/**/*.wasm.gz",
-      "./node_modules/@aztec/bb.js/dest/**/*",
-    ],
-  },
-  serverExternalPackages: ["@aztec/bb.js"],
 };
 
 export default nextConfig;

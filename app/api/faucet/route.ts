@@ -1,4 +1,6 @@
-export const runtime = 'nodejs';
+export const config = {
+  runtime: "edge",
+};
 
 import { createWalletClient, createPublicClient, http, parseUnits } from "viem"
 import { base, mainnet } from "viem/chains"
